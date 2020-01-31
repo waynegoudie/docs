@@ -1,6 +1,7 @@
 ![logo](_media/docker-media-server-375x210.png)
 
 # The Legends Ultimate Home Media Server 
+
 <small>Copyright 'The Legend'</small>
 
 > Guide for building a docker based home media server.
