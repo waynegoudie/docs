@@ -32,7 +32,7 @@ One of the big tasks of a completely automated Media server is a media aggregati
 - Provide a unified interface to access all the apps
 - Update all the apps automatically
 
-Now Let's [Get started](Installing Ubuntu.md)!
+Now Let's [Get started](Installing-Ubuntu.md)!
 
 ## Examples
 
