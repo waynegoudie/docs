@@ -1,7 +1,7 @@
 - Getting started
 
   - [Installing Ubuntu](Installing-Ubuntu.md)
-  - [Installing Docker](more-pages.md)
+  - [Installing Docker](Installing-Docker.md)
   - [Setting Environment Variables](custom-navbar.md)
   - [Non Docker Apps](cover.md)
 
