@@ -1,12 +1,12 @@
-![logo](_media/icon.svg)
+![logo](_media/docker-media-server-375x210.png)
 
-# docsify <small>4.10.2</small>
+# The Legends Ultimate Home Media Server <small>Copyright 'The Legend'</small>
 
-> A magical documentation site generator.
+> Guide for building a docker based home media server.
 
-- Simple and lightweight (~21kB gzipped)
-- No statically built html files
-- Multiple themes
+- Leveraging Docker Compose
+- Utilising Traefik Proxy
+- Authentication via OAuth
 
-[GitHub](https://github.com/docsifyjs/docsify/)
+[GitHub](https://waynegoudie.github.com/MediaServer)
 [Getting Started](#docsify)
