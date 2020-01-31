@@ -18,7 +18,7 @@
 
   - [GitHub](deploy.md)
   - [Docsify Installation/Setup](helpers.md)
-  - [Smart Home Beginner](vue.md)
+  - [Smart Home Beginner](smarthomebeginner.md)
   - [Webhook Relay](cdn.md)
   - [Offline Mode(PWA)](pwa.md)
   - [Server-Side Rendering(SSR)](ssr.md)
