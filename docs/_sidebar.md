@@ -1,11 +1,11 @@
 - Getting started
 
   - [Installing Ubuntu](Installing-Ubuntu.md)
-  - [Writing more pages](more-pages.md)
-  - [Custom navbar](custom-navbar.md)
-  - [Cover page](cover.md)
+  - [Installing Docker](more-pages.md)
+  - [Setting Environment Variables](custom-navbar.md)
+  - [Non Docker Apps](cover.md)
 
-- Customization
+- Docker Apps
 
   - [Configuration](configuration.md)
   - [Themes](themes.md)
@@ -14,15 +14,15 @@
   - [Markdown configuration](markdown.md)
   - [Language highlighting](language-highlight.md)
 
-- Guide
+- Other Documentation
 
-  - [Deploy](deploy.md)
-  - [Helpers](helpers.md)
-  - [Vue compatibility](vue.md)
-  - [CDN](cdn.md)
+  - [GitHub](deploy.md)
+  - [Docsify Installation/Setup](helpers.md)
+  - [Smart Home Beginner](vue.md)
+  - [Webhook Relay](cdn.md)
   - [Offline Mode(PWA)](pwa.md)
   - [Server-Side Rendering(SSR)](ssr.md)
   - [Embed Files](embed-files.md)
 
-- [Awesome docsify](awesome.md)
+- [Full YAML](awesome.md)
 - [Changelog](changelog.md)
