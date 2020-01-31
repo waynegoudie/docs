@@ -11,6 +11,7 @@ Then, add the Docker repository's GPG key for verification of repository:
 Next, add the Docker repository:
 
 ``` sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" ```
+> There are different stable builds depending on the version of Ubunutu. Check [here](https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/) for the correct version.
 
 Then, refresh Ubuntu packages list:
 
