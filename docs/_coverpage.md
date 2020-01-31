@@ -5,9 +5,9 @@
 
 > Guide for building a docker based home media server.
 
-- Leveraging Docker Compose
-- Utilising Traefik Proxy
-- Authentication via OAuth
+* Leveraging Docker Compose
+* Utilising Traefik Proxy
+* Authentication via OAuth
 
 [GitHub](https://waynegoudie.github.com/MediaServer)
 [Getting Started](#docsify)
