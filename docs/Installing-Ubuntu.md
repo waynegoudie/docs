@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Lubuntu.svg">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Lubuntu.svg" width="400" height="400">
 </p>
 
 ## Installing Ubuntu
