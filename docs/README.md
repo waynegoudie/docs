@@ -17,16 +17,22 @@ To start using it, all you need to do is create an `index.html` and [deploy it o
 
 See the [Quick start](quickstart.md) guide for more details.
 
+### OBJECTIVES OF THIS DOCKER HOME MEDIA SERVER
+One of the big tasks of a completely automated Media server is a media aggregation. For example, when a TV show episode becomes available, automatically download it, collect its poster, fanart, subtitle, etc., put them all in a folder of your choice (eg. inside your TV Shows folder), update your media library (eg. on Plex) and then send a notification to you (eg. Email, Mobile notification, etc.) saying your episode is ready to watch. Sounds awesome right? There are several apps that can do such tasks which are included in this setup.
+
 ## Features
 
-- No statically built html files
-- Simple and lightweight (~21kB gzipped)
-- Smart full-text search plugin
-- Multiple themes
-- Useful plugin API
-- Emoji support
-- Compatible with IE11
-- Support server-side rendering ([example](https://github.com/docsifyjs/docsify-ssr-demo))
+- Automated TV Show download and organization
+- Automated Movie download and organization
+- On-demand or automated torrent download
+- On-demand or automated NZB (Usenet) download
+- Serve and Stream Media to Devices in the house and outside through internet
+- On demand torrent and NZB search interface
+- Act as a personal cloud server with secure file access anywhere
+- Provide a unified interface to access all the apps
+- Update all the apps automatically
+
+Now Let's [Get started](quickstart.md)!
 
 ## Examples
 
