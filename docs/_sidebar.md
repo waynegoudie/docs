@@ -1,6 +1,6 @@
 - Getting started
 
-  - [Installing Ubuntu](Installing Ubuntu.md)
+  - [Installing Ubuntu](Installing-Ubuntu.md)
   - [Writing more pages](more-pages.md)
   - [Custom navbar](custom-navbar.md)
   - [Cover page](cover.md)
