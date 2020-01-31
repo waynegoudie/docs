@@ -26,4 +26,7 @@ You can check the installed version using the command docker –version. Finally
 
 It will download a test container and run it. You should see an out similar to the one below:
 
-<a href img source="https://www.smarthomebeginner.com/images/2018/04/docker-hello-world.png"/a>
+<p align="center">
+  <img src="https://www.smarthomebeginner.com/images/2018/04/docker-hello-world.png">
+</p>
+
