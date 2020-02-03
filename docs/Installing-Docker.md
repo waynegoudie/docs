@@ -2,7 +2,9 @@
 
 For simplicity, we will install Docker and Docker Compose from the repository. Ubuntu has Docker in the official repository. However, this is can be several versions old. So we are going to install them from Docker repositories. First, prepare to add Docker repository using the following command:
 
-``` sudo apt-get install apt-transport-https ca-certificates curl software-properties-common ```
+```bash
+sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+```
 
 Then, add the Docker repository's GPG key for verification of repository:
 
