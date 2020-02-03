@@ -8,24 +8,34 @@ sudo apt-get install apt-transport-https ca-certificates curl software-propertie
 
 Then, add the Docker repository's GPG key for verification of repository:
 
-``` curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - ```
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
+```
 
 Next, add the Docker repository:
 
-``` sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" ```
+```bash 
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
+```
 > There are different stable builds depending on the version of Ubunutu. Check [here](https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/) for the correct version.
 
 Then, refresh Ubuntu packages list:
 
-``` sudo apt-get update ```
+```bash
+sudo apt-get update
+```
 
 If you did not encounter any errors (you won't if you follow the steps above correctly) during the above steps you should be good to install Docker and Docker Compose on Ubuntu using the following command:
 
-``` sudo apt-get install docker-ce ```
+```bash
+sudo apt-get install docker-ce 
+```
 
 You can check the installed version using the command docker –version. Finally, test your docker setup using the following command.
 
-``` sudo docker run hello-world ```
+```bash
+sudo docker run hello-world
+```
 
 It will download a test container and run it. You should see an out similar to the one below:
 
