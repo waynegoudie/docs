@@ -43,3 +43,20 @@ It will download a test container and run it. You should see an out similar to t
   <img src="https://www.smarthomebeginner.com/images/2018/04/docker-hello-world.png">
 </p>
 
+## Docker Compose Installation
+
+In this guide I am going to use Docker compose to simplify installation of home server apps and reduce commandline work. Docker compose is in the Ubuntu repositories but it is quite old, as is the case most of the time. So let's install the latest version of Docker compose on Ubuntu.
+
+First, find out the [latest version of Docker compose](https://github.com/docker/compose/releases) that is now available. Latest version at the time of writing this is > 1.25.4
+
+Next, install the latest version of Docker compose using the following command:
+
+```bash
+sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+```
+Replace ```1.25.4``` with the currently available version as determined above. Finally, provide execute permissions to Docker Compose using the following command:
+
+```bash
+sudo chmod +x /usr/local/bin/docker-compose
+```
+If correctly installed you should see the version number as output for this command: ```bash docker-compose --version.```
