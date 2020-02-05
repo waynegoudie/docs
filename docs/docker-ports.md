@@ -1,4 +1,4 @@
-## Docker Port Assignment
+# Docker Port Assignment
 
 Now that all the basic setup is done we can start with the easy part: setting up apps through containers. I have broken this section down into few different categories. What apps you choose for each category is a matter of personal preference. I have shown the setup instruction for the apps I recommend. Where possible I have also provided some popular alternatives.
 
