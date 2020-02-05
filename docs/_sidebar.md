@@ -2,8 +2,7 @@
 
   - [Installing Ubuntu](Installing-Ubuntu.md)
   - [Installing Docker](Installing-Docker.md)
-  - [Setting Environment Variables](custom-navbar.md)
-  - [Non Docker Apps](cover.md)
+  - [Docker Port assignment](docker-ports.md)
 
 - Docker Apps
 
@@ -20,7 +19,7 @@
   - [Docsify Installation/Setup](helpers.md)
   - [Smart Home Beginner](smarthomebeginner.md)
   - [Webhook Relay](cdn.md)
-  - [Offline Mode(PWA)](pwa.md)
+  - [Global Environment Variables]](pwa.md)
   - [Server-Side Rendering(SSR)](ssr.md)
   - [Embed Files](embed-files.md)
 
