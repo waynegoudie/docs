@@ -1,4 +1,4 @@
-## Docker Installation
+# Docker Installation
 
 For simplicity, we will install Docker and Docker Compose from the repository. Ubuntu has Docker in the official repository. However, this is can be several versions old. So we are going to install them from Docker repositories. First, prepare to add Docker repository using the following command:
 
@@ -90,7 +90,7 @@ MYSQL_ROOT_PASSWORD="password"
 
 There will be more environment variables added, but these will be explained under each docker app configuration.
 
-#### Replace/Configure:
+### Replace/Configure:
 
 1. ```PUID``` and ```PGID``` – the user ID of the linux user, who we want to run the home server apps as, and group ID of docker. Both of these can be obtained using the ```id``` command as shown below.
 
@@ -113,10 +113,12 @@ These environmental variables will be referred using {} throughout the docker co
 
 That's it, the basic prep work to build our docker home server is done.
 
-## BASIC DOCKER AND DOCKER COMPOSE PRIMER
+# BASIC DOCKER AND DOCKER COMPOSE PRIMER
+
 Now let us start with a basic intro to Docker and Docker Compose. This is very important so you know what we are doing, when/how to stop and test, and when/how to start again. Then we are going to setup our ```docker-compose.yml``` file. Once our compose file is completely built, we will run it and you will see how in minutes your docker based home media server will be built. You can use any text editor to create your compose file. Make sure to follow ```yml``` syntax thoroughly as even differences in character spacing can throw errors. If you copy-paste from this guide, you should be fine. I am going to use ```nano``` editor.
 
-### Docker Folder and Permissions
+## Docker Folder and Permissions
+
 For simplicity, I created a folder called ```docker``` in my home folder. All my docker stuff, apps, app data will be stored in this container:
 
 ```bash
@@ -132,7 +134,7 @@ sudo chmod -R 775 ~/docker
 
 The above command forces any new sub-folders within the docker folder to inherit permissions from the docker folder. Some may disagree with the liberal permissions above but again this is for home use and it is restrictive enough.
 
-### Starting Docker Compose File
+## Starting Docker Compose File
 
 Finally, let us start creating our ```docker-compose.yml``` file:
 
@@ -149,7 +151,7 @@ services:
 
 At any time, you can save and exit by pressing ```Ctrl + X``` -> ```y``` -> ```Enter``` and reopen for editing with the above nano command.
 
-### Starting Containers using Docker Compose
+## Starting Containers using Docker Compose
 
 This section is an intro to some of the commands you will use later in this guide. Running them at this point in the guide will throw errors. After adding compose options for each container (note that we have not added these yet), I recommend saving, exiting, and running the compose file using the following command to check if the container app starts correctly.
 
@@ -161,7 +163,7 @@ The ```-d``` option daemonizes it in the background. Without it, you will see re
 
 NOTE: At this point, you do not have any services.
 
-### See Docker Containers
+## See Docker Containers
 
 At any time, you can check all the docker containers you have on your system (both running and stopped) using the following command:
 
@@ -177,7 +179,7 @@ As an example here is a list of my containers for now. “STATUS” column shows
 Docker List of Containers
 
 
-### Check Docker Container Logs
+## Check Docker Container Logs
 
 If you want to check the real-time logs while the container starts you can use the following command:
 
@@ -198,7 +200,7 @@ Docker Compose Real-time Logs for Containers
 
 At any time, you can exit from the real-time logs screen by pressing ```Ctrl + C```.
 
-### Stopping / Restarting Containers using Docker Compose
+## Stopping / Restarting Containers using Docker Compose
 
 To stop any running docker container, use the following command:
 
@@ -212,7 +214,7 @@ Replace ```CONTAINER-NAME``` with the friendly name of the container. You can al
 docker-compose -f ~/docker/docker-compose.yml down
 ```
 
-### Docker Cleanup
+## Docker Cleanup
 Remember, one of the biggest benefits of Docker is that it is extremely hard to mess up your host operating system. So you can create and destroy containers at will. But over time leftover Docker images, containers, and volumes can take several GBs of space. So at any time you can run the following clean up scripts and re-run your docker-compose as described above.
 
 ```bash
