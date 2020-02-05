@@ -142,7 +142,7 @@ nano ~/docker/docker-compose.yml
 
 Add the following two lines to it:
 
-```yaml
+```yml
 version: "3.6"
 services:
 ```
