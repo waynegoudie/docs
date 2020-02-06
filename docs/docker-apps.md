@@ -32,7 +32,7 @@ portainer:
       traefik.backend: portainer
       traefik.protocol: http
       traefik.port: 9000
-      traefik.frontend.rule: Host:sportainer.${DOMAINNAME}
+      traefik.frontend.rule: Host:portainer.${DOMAINNAME}
       traefik.frontend.headers.SSLHost: portainer.${DOMAINNAME}
       traefik.docker.network: traefik_proxy
       traefik.frontend.passHostHeader: "true"
@@ -62,3 +62,58 @@ docker-compose -f ~/docker/docker-compose.yml up -d
 ```
 
 Portainer WebUI should be available at http://SERVER-IP:XXXX. Repeat the above command after each container is added to ```docker-compose.yml``` file and ensure that the app works.
+
+## Organizr
+
+<p align="center">
+  <img src="https://organizr.app/wp-content/uploads/2015/04/CJ8OziG-1024x552.jpg">
+</p>
+
+Home media server with several apps may be cool but now you will have to remember all the different port numbers to access them. That is where [Organizr](https://organizr.app/) comes in. Organizr provides a unified interface to access all your home server apps so you do not have to remember them individually. The tabbed interface allows you to work on your server with ease. You can even setup users and give them access to specific apps. The calendar provides an overview of what TV show episodes are coming soon.  Docker makes it easier to install. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+organizr-v2:
+    container_name: organizr-v2
+    restart: always
+    image: organizrtools/organizr-v2
+    volumes:
+      - ${USERDIR}/docker/organizrv2:/config
+      - ${USERDIR}/docker/sharedv2:/shared
+    ports:
+      - "XXXX:80"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    networks:
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=organizr-v2"
+      - "traefik.frontend.rule=Host:organizr.${DOMAINNAME}"
+#      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /organizr"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_proxy"
+#      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+#      - "traefik.frontend.headers.browserXSSFilter=true"
+#      - "traefik.frontend.headers.contentTypeNosniff=true"
+#      - "traefik.frontend.headers.forceSTSHeader=true"
+#      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+#      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+#      - "traefik.frontend.headers.STSPreload=true"
+#      - "traefik.frontend.headers.frameDeny=false"
+      - "traefik.frontend.headers.customFrameOptionsValue=allow-from https://organizr.thelegendshub.com"
+      - "traefik.frontend.passHostHeader=true"
+```
+
+### Replace/Configure:
+
+```XXXX``` – port number on which you want the portainer Webui to be available at. It could be the same port as the container: 9000 (must be free). I used ```8841```
+After saving the ```docker-compose.yml``` file, run the following command to start the container and check if the app is accessible:
+
+```bash
+docker-compose -f ~/docker/docker-compose.yml up -d
+```
+
+Organizr WebUI should be available at http://SERVER-IP:XXXX (:XXXX not needed if port 80 is used). Repeat the above command after each container is added to ```docker-compose.yml``` file and ensure that the app works.
