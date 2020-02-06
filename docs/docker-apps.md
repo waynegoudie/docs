@@ -103,7 +103,7 @@ organizr-v2:
 #      - "traefik.frontend.headers.STSIncludeSubdomains=true"
 #      - "traefik.frontend.headers.STSPreload=true"
 #      - "traefik.frontend.headers.frameDeny=false"
-      - "traefik.frontend.headers.customFrameOptionsValue=allow-from https://organizr.thelegendshub.com"
+      - "traefik.frontend.headers.customFrameOptionsValue=allow-from https://organizr.${DOMAINNAME}"
       - "traefik.frontend.passHostHeader=true"
 ```
 
