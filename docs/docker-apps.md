@@ -109,11 +109,11 @@ organizr-v2:
 
 ### Replace/Configure:
 
-```XXXX``` – port number on which you want the portainer Webui to be available at. It could be the same port as the container: 9000 (must be free). I used ```8841```
+```XXXX``` – port number on which you want the Organizr Webui to be available at. It could be the same port as the container: 80 (must be free). Port 80 is the default webserver port. So you do not need to specify the ```:80``` at the end of the IP Address or Domain Name. I used ```8841```
 After saving the ```docker-compose.yml``` file, run the following command to start the container and check if the app is accessible:
 
 ```bash
 docker-compose -f ~/docker/docker-compose.yml up -d
 ```
 
-Organizr WebUI should be available at http://SERVER-IP:XXXX (:XXXX not needed if port 80 is used). Repeat the above command after each container is added to ```docker-compose.yml``` file and ensure that the app works.
+Organizr WebUI should be available at http://SERVER-IP:XXXX (:XXXX not needed if port 80 is used). 
