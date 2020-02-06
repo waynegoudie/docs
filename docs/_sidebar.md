@@ -6,7 +6,7 @@
 
 - Docker Apps
 
-  - [Configuring Traefik on Docker](traefik-docker.md)
+  - [Configuring Traefik on Docker](docker-traefik.md)
   - [Docker Home Media Server - Docker Apps](docker-apps.md)
   - [List of Plugins](plugins.md)
   - [Write a Plugin](write-a-plugin.md)
