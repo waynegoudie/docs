@@ -1,0 +1,2 @@
+# Trafik on docker configuration
+
