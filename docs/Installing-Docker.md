@@ -83,9 +83,10 @@ Add the following as separate lines at the end of the file:
 ```bash
 PUID=1000
 PGID=1000
-TZ="America/New_York"
+TZ="Australia/Brisbane"
 USERDIR="/home/USER"
 MYSQL_ROOT_PASSWORD="password"
+MEDIADIR="/mnt/Media/Media"
 ```
 
 There will be more environment variables added, but these will be explained under each docker app configuration.
@@ -106,6 +107,7 @@ In this guide, we are going to use 1000 for PUID, which is the user id of user a
 cd ~ ; pwd
 ```
 4. ```MYSQL_ROOT_PASSWORD``` – MySQL administrator password for MariaDB and phpMyAdmin.
+5. ```MEDIADIR``` - Location where all of your Media files are stored i.e TV Shows and Movies
 
 These environmental variables will be referred using {} throughout the docker compose file. You do not need to replace them. Their values will be automatically pulled from the environment file that we created / edited above.
 
