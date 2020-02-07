@@ -297,9 +297,8 @@ sabnzbd:
 2. ```${MEDIADIR}/incomplete``` – Path where to save currently downloading files. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
 3. ```${MEDIADIR}/NZB_Watched``` – Path where to save NZB files that SABNZBD should watch in order to automatically download files. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
 4. ```${MEDIADIR}/Media``` – Path where all of your media is stored. For me, my media downloads into the ```{$MEDIADIR}\Downloads``` directory where it is then moved into the ```${MEDIADIR}/Media``` by SABNZBD automatically sorted in TV and Movie folders. 
-<p align="center">
-  <img src="_images/sabnzbd_folder_config.PNG">
-</p>
+![SABNZBD Folder Config](_images/sabnzbd_folder_config.PNG)
+
 ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
 5. ```XXXX``` – port number on which you want the SABnzbd Webui to be available at. I choose to use: 8090 (must be free).
 
