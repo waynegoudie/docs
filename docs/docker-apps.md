@@ -211,3 +211,90 @@ phpmyadmin:
 2. ```MYSQL_ROOT_PASSWORD``` – Filled in automatically from the environment file we created previously.
 
 Save and run the ```docker-compose.yml``` file as described previously and check if the container is working.
+
+## Watchtower
+
+<p align="center">
+  <img src="https://camo.githubusercontent.com/7edd4ae7ae04b30fd707f9f9713e9778040b39ad/68747470733a2f2f30783132622e636f6d2f7761746368746f7765722d6c6f676f2e706e67">
+</p>
+
+So we have built a kickass docker media server but it would be a pain if we have to watch each of the containers and update them manually. This is where [Watchtower](https://github.com/v2tec/watchtower) comes in. Watchtower monitors your Docker containers. If their images in the Docker Store change, then watchtower will pull the new image, shutdown the running container and restart with the new image and the options you originally set for the container while deploying. You can specify the frequency of update check as time interval or as cron time. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+watchtower:
+    container_name: watchtower
+    restart: always
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --schedule "0 0 4 * * *" --cleanup
+```
+
+### Replace/Configure:
+
+1. ```--schedule "0 0 4 * * *"``` – containers are checked for updates at 4 am everyday. You can use the 6-digit cron schedule or you can specify time interval: ```--interval 30``` for checking every 30 seconds. Daily check is good enough for home use in my opinion. If you want weekly, then use ```0 0 23 * * SUN``` for every update at 11 pm on Sundays.
+
+Save and run the ```docker-compose.yml``` file as described previously and check if the container is working. No need to do check or see anything with Watchtower. It just runs in the background and does its job.
+
+## SABNZBD - Usenet
+
+<p align="center">
+  <img src="https://sabnzbd.org/images/landing/screenshots/tabbed.png">
+</p>
+
+[SABnzbd](https://sabnzbd.org/) is my favorite NZB newsgrabber client.  Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+sabnzbd:
+    image: "linuxserver/sabnzbd"
+    container_name: "sabnzbd"
+    volumes:
+      - ${USERDIR}/docker/sabnzbd:/config
+      - ${MEDIADIR}/Usenet:/downloads
+      - ${MEDIADIR}/incomplete:/incomplete-downloads
+      - ${MEDIADIR}/NZB_Watched:/watched
+      - ${USERDIR}/docker/shared:/shared
+      - ${MEDIADIR}/Media:/media
+    ports:
+        - "8090:8080"
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    networks:
+      - traefik_proxy
+      - default
+    labels:
+      traefik.enable: "true"
+      traefik.home: "true"
+      traefik.backend: sabnzbd
+      traefik.protocol: http
+      traefik.port: 8080
+      traefik.frontend.rule: Host:sabnzbd.${DOMAINNAME}
+      traefik.frontend.headers.SSLHost: sabnzbd.${DOMAINNAME}
+      traefik.docker.network: traefik_proxy
+      traefik.frontend.passHostHeader: "true"
+      traefik.frontend.headers.SSLForceHost: "true"
+      traefik.frontend.headers.SSLRedirect: "true"
+      traefik.frontend.headers.browserXSSFilter: "true"
+      traefik.frontend.headers.contentTypeNosniff: "true"
+      traefik.frontend.headers.forceSTSHeader: "true"
+      traefik.frontend.headers.STSSeconds: 315360000
+      traefik.frontend.headers.STSIncludeSubdomains: "true"
+      traefik.frontend.headers.STSPreload: "true"
+      traefik.frontend.headers.customResponseHeaders: X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex
+#      traefik.frontend.headers.frameDeny: "true" #customFrameOptionsValue overrides this
+      traefik.frontend.headers.customFrameOptionsValue: 'allow-from https:${DOMAINNAME}'
+      traefik.frontend.auth.forward.address: "http://oauth:4181"
+      traefik.frontend.auth.forward.authResponseHeaders: X-Forwarded-User
+      traefik.frontend.auth.forward.trustForwardHeader: "true"
+```
+
+### Replace/Configure:
+
+1. ```${USERDIR}/Downloads/completed``` – Path where to save downloaded files. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+2. ```${USERDIR}/Downloads/incomplete``` – Path where to save currently downloading files. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+3. ```XXXX``` – port number on which you want the SABnzbd Webui to be available at. I choose to use: 8090 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. SABnzbd WebUI should be available at http://SERVER-IP:XXXX.
