@@ -303,3 +303,285 @@ sabnzbd:
 5. ```XXXX``` – port number on which you want the SABnzbd Webui to be available at. I choose to use: 8090 (must be free).
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. SABnzbd WebUI should be available at http://SERVER-IP:XXXX.
+
+## Radarr
+
+<p align="center">
+  <img src="https://radarr.video/img/slider/moviedetails.png">
+</p>
+
+[Radarr](https://radarr.video/) is a Movie PVR. You add the movies you want to see to Radarr and it will search various bittorrent and Usenet providers for the movie. If it is available it will grab the index file and send it to your bittorrent client or NZB client for downloading. Once the download is complete it can rename your movie to a specified format and move it to a folder of your choice (movie library). It can even update your Kodi library or notify you when a new movie is ready for you to watch. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+radarr:
+    image: "linuxserver/radarr:preview"
+    container_name: "radarr"
+    volumes:
+      - ${USERDIR}/docker/radarr:/config
+      - ${MEDIADIR}/Usenet:/downloads
+      - ${MEDIADIR}/Media/Movies:/movies
+      - "/etc/localtime:/etc/localtime:ro"
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "7878:7878"
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=radarr"
+      - "traefik.frontend.rule=Host:radarr.${DOMAINNAME}"
+#      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /portainer"
+      - "traefik.port=7878"
+      - "traefik.protocol=http"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+```
+
+### Replace/Configure:
+
+1. ```${MEDIADIR}/Usenet``` – Path where to save downloaded files. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+4. ```${MEDIADIR}/Media/Movies``` – Path where all of your movies are stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+5. ```XXXX``` – port number on which you want the Radarr Webui to be available at. I choose to use the default: 7878 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Radarr WebUI should be available at http://SERVER-IP:XXXX.
+
+## Sonarr
+
+<p align="center">
+  <img src="https://sonarr.tv/img/slider/seriesdetails.png">
+</p>
+
+[Sonarr](https://sonarr.tv/) is a PVR for TV Shows. You add the shows you want to see to Sonarr and it will search various bittorrent and Usenet providers for the show episodes. If it is available it will grab the index file and send it to your bitorrent client or NZB client for downloading. Once the download is complete it can rename your episode to a specified format and move it to a folder of your choice (TV Show library). It can even update your Kodi library or notify you when a new episode is ready for you to watch. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+sonarr:
+    image: "linuxserver/sonarr:preview"
+    container_name: "sonarr"
+    volumes:
+      - ${USERDIR}/docker/sonarr:/config
+      - ${MEDIADIR}/Usenet:/downloads
+      - ${MEDIADIR}/Media/TV:/tv
+      - "/etc/localtime:/etc/localtime:ro"
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "8989:8989"
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=sonarr"
+      - "traefik.frontend.rule=Host:sonarr.${DOMAINNAME}"
+#      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /portainer"
+      - "traefik.port=8989"
+      - "traefik.protocol=http"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+```
+
+### Replace/Configure:
+
+1. ```${MEDIADIR}/Usenet``` – Path where to save downloaded files. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+4. ```${MEDIADIR}/Media/TV``` – Path where all of your TV Shows are stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+5. ```XXXX``` – port number on which you want the Sonarr Webui to be available at. I choose to use the default: 8989 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Sonarr WebUI should be available at http://SERVER-IP:XXXX.
+
+## Emby
+
+<p align="center">
+  <img src="https://emby.media/resources/4SRG8AU-Imgur.png">
+</p>
+
+[Emby](https://emby.media/) is a media server designed to organize, play, and stream audio and video to a variety of devices. It supports most devices (iOS, Android, Android TV, Windows, Kodi etc). This is what I use as my primary media server. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+emby:
+    image: emby/embyserver
+    container_name: emby
+    # net: host
+    restart: always
+    ports:
+      - 8096:8096
+      - 8920:8920
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${USERDIR}/docker/embyserver:/config
+      - ${MEDIADIR}/Media:/media
+      - ${MEDIADIR}/Music:/music
+      - /mnt/Seagate_HDD:/Seagate_HDD
+    environment:
+      - AUTO_UPDATES_ON=true
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - traefik_proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=emby"
+      - "traefik.frontend.rule=Host:emby.${DOMAINNAME}"
+#      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /portainer"
+      - "traefik.port=8096"
+      - "traefik.protocol=http"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+```
+
+### Replace/Configure:
+
+1. ```${MEDIADIR}/Music``` – Path where all of your Music is stored. If it is in the same place as all of your media, then there is no need for a separate volume. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+2. ```${MEDIADIR}/Media``` – Path where all of your Media is stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+3. Add any additional Media volumes. For example, I have more media stored on ```/mnt/Seagate_HDD```
+4. ```XXXX``` – port number on which you want the Emby Webui to be available at. I choose to use the default: 8096 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Emby WebUI should be available at http://SERVER-IP:XXXX.
+
+## Alternative Media App - Jellyfin
+
+<p align="center">
+  <img src="https://lh3.googleusercontent.com/oucA3mh5fNjwjqJa-pE9PENyLo6cCoZ0-Zz3KDLZ8-G9sTruicg1e7NE9LNhJvvP72Cb">
+</p>
+
+[Jellyfin](https://jellyfin.org/) is a media server designed to organize, play, and stream audio and video to a variety of devices. It supports most devices (iOS, Android, Android TV, Windows, Kodi etc). This is an open source media server which has been based off Emby. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+jellyfin:
+     image: jellyfin/jellyfin
+     container_name: jellyfin
+     network_mode: host
+#     user: 1001:1001
+     volumes:
+       - ${USERDIR}/docker/jellyfin/config:/config
+       - ${MEDIADIR}/Media:/media
+       - ${MEDIADIR}/Music:/Music
+       - /mnt/Seagate_HDD:/Seagate_HDD
+       - ${MEDIADIR}:/MediaDir
+     environment:
+       - TZ=${TZ}
+       - PUID=${PUID}
+       - PGID=${PGID}
+     ports:
+       - "8196:8096"
+       - "9920:8920"
+     restart: always
+    networks:
+      - traefik_proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=jellyfin"
+      - "traefik.frontend.rule=Host:jellyfin.${DOMAINNAME}"
+#      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /portainer"
+      - "traefik.port=8196"
+      - "traefik.protocol=http"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+```
+
+### Replace/Configure:
+
+1. ```${MEDIADIR}/Music``` – Path where all of your Music is stored. If it is in the same place as all of your media, then there is no need for a separate volume. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+2. ```${MEDIADIR}/Media``` – Path where all of your Media is stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+3. ```XXXX``` – port number on which you want the Emby Webui to be available at. I choose to use the default: 8096 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Emby WebUI should be available at http://SERVER-IP:XXXX.
+
+## Alternative Media App - Plex
+
+<p align="center">
+  <img src="https://emby.media/resources/4SRG8AU-Imgur.png">
+</p>
+
+[Emby](https://emby.media/) is a media server designed to organize, play, and stream audio and video to a variety of devices. It supports most devices (iOS, Android, Android TV, Windows, Kodi etc). This is what I use as my primary media server. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+emby:
+    image: emby/embyserver
+    container_name: emby
+    # net: host
+    restart: always
+    ports:
+      - 8096:8096
+      - 8920:8920
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${USERDIR}/docker/embyserver:/config
+      - ${MEDIADIR}/Media:/media
+      - ${MEDIADIR}/Music:/music
+      - /mnt/Seagate_HDD:/Seagate_HDD
+    environment:
+      - AUTO_UPDATES_ON=true
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - traefik_proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=emby"
+      - "traefik.frontend.rule=Host:emby.${DOMAINNAME}"
+#      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /portainer"
+      - "traefik.port=8096"
+      - "traefik.protocol=http"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=315360000"
+      - "traefik.frontend.headers.browserXSSFilter=true"
+      - "traefik.frontend.headers.contentTypeNosniff=true"
+      - "traefik.frontend.headers.forceSTSHeader=true"
+      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.headers.frameDeny=true"
+
+```
+
+### Replace/Configure:
+
+1. ```${MEDIADIR}/Music``` – Path where all of your Music is stored. If it is in the same place as all of your media, then there is no need for a separate volume. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+2. ```${MEDIADIR}/Media``` – Path where all of your Media is stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+3. ```XXXX``` – port number on which you want the Emby Webui to be available at. I choose to use the default: 8096 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Emby WebUI should be available at http://SERVER-IP:XXXX.
