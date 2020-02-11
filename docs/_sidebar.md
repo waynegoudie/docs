@@ -19,8 +19,8 @@
   - [Docsify Installation/Setup](helpers.md)
   - [Smart Home Beginner](smarthomebeginner.md)
   - [Webhook Relay](cdn.md)
-  - [Global Environment Variables]](pwa.md)
-  - [Server-Side Rendering(SSR)](ssr.md)
+  - [Global Environment Variables](pwa.md)
+  - [Docker/Docker Compose Install Script](docker_install.sh)
   - [Embed Files](embed-files.md)
 
 - [Full YAML](awesome.md)
