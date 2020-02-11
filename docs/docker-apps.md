@@ -591,4 +591,4 @@ plexms:
 4. ```PLEX-CLAIM``` - Your Plex access claim code from [here](https://www.plex.tv/claim/). The word “claim” in front of the code must be in lower case.
 5. ```ADVERTISE_IP``` – IP Address of your server (eg. 192.168.1.100) – you can get this from your router admin page or run ifconfig in terminal.
 
-Save and run the docker-compose.yml file as described previously and check if the app is working. Emby WebUI should be available at http://SERVER-IP:XXXX.
+Save and run the docker-compose.yml file as described previously and check if the app is working. Plex WebUI should be available at http://SERVER-IP:32400.
