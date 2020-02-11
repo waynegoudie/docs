@@ -524,44 +524,49 @@ jellyfin:
 
 1. ```${MEDIADIR}/Music``` – Path where all of your Music is stored. If it is in the same place as all of your media, then there is no need for a separate volume. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
 2. ```${MEDIADIR}/Media``` – Path where all of your Media is stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
-3. ```XXXX``` – port number on which you want the Emby Webui to be available at. I choose to use the default: 8096 (must be free).
+3. ```XXXX``` – port number on which you want the Jellyfin Webui to be available at. I choose to use the default: 8096 (must be free).
 
-Save and run the docker-compose.yml file as described previously and check if the app is working. Emby WebUI should be available at http://SERVER-IP:XXXX.
+Save and run the docker-compose.yml file as described previously and check if the app is working. Jellyfin WebUI should be available at http://SERVER-IP:XXXX.
 
 ## Alternative Media App - Plex
 
 <p align="center">
-  <img src="https://emby.media/resources/4SRG8AU-Imgur.png">
+  <img src="https://zhf1943ap1t4f26r11i05c7l-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/plex-uno-apple-tv-tv-shows-1-1024x576.png">
 </p>
 
-[Emby](https://emby.media/) is a media server designed to organize, play, and stream audio and video to a variety of devices. It supports most devices (iOS, Android, Android TV, Windows, Kodi etc). This is what I use as my primary media server. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+[Plex](https://plex.tv/) is a media server designed to organize, play, and stream audio and video to a variety of devices. This is an alternative to Emby. I personally prefer Emby/Jellyfin over Plex. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
 
 ```yaml
-emby:
-    image: emby/embyserver
-    container_name: emby
-    # net: host
+plexms:
+    container_name: plexms
     restart: always
-    ports:
-      - 8096:8096
-      - 8920:8920
+    image: plexinc/pms-docker
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${USERDIR}/docker/embyserver:/config
+      - ${USERDIR}/docker/plexms:/config
+      - ${MEDIADIR}/Plex_Transcode:/transcode
       - ${MEDIADIR}/Media:/media
-      - ${MEDIADIR}/Music:/music
-      - /mnt/Seagate_HDD:/Seagate_HDD
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "32400:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
     environment:
-      - AUTO_UPDATES_ON=true
-      - PUID=${PUID}
-      - PGID=${PGID}
-    networks:
-      - traefik_proxy
-      - default
+      - TZ=${TZ}
+      - HOSTNAME="Media-PC"
+      - PLEX_CLAIM="claim-XXXXXXXXXXX"
+      - PLEX_UID=${PUID}
+      - PLEX_GID=${PGID}
+      - ADVERTISE_IP="http://SERVER-IP:32400/"
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=emby"
-      - "traefik.frontend.rule=Host:emby.${DOMAINNAME}"
+      - "traefik.backend=plexms"
+      - "traefik.frontend.rule=Host:plex.${DOMAINNAME}"
 #      - "traefik.frontend.rule=Host:${DOMAINNAME}; PathPrefixStrip: /portainer"
       - "traefik.port=8096"
       - "traefik.protocol=http"
@@ -580,8 +585,10 @@ emby:
 
 ### Replace/Configure:
 
-1. ```${MEDIADIR}/Music``` – Path where all of your Music is stored. If it is in the same place as all of your media, then there is no need for a separate volume. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+1. ```${MEDIADIR}/Transcode``` – Path where you would like to store your temporary transcoding files. If it is in the same place as all of your media, then there is no need for a separate volume. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
 2. ```${MEDIADIR}/Media``` – Path where all of your Media is stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
-3. ```XXXX``` – port number on which you want the Emby Webui to be available at. I choose to use the default: 8096 (must be free).
+3. ```HOSTNAME``` - Name your plex server.
+4. ```PLEX-CLAIM``` - Your Plex access claim code from [here](https://www.plex.tv/claim/). The word “claim” in front of the code must be in lower case.
+5. ```ADVERTISE_IP``` – IP Address of your server (eg. 192.168.1.100) – you can get this from your router admin page or run ifconfig in terminal.
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. Emby WebUI should be available at http://SERVER-IP:XXXX.
