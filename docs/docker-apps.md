@@ -215,7 +215,7 @@ Save and run the ```docker-compose.yml``` file as described previously and check
 ## Watchtower
 
 <p align="center">
-  <img src="https://camo.githubusercontent.com/7edd4ae7ae04b30fd707f9f9713e9778040b39ad/68747470733a2f2f30783132622e636f6d2f7761746368746f7765722d6c6f676f2e706e67">
+  <img src="https://camo.githubusercontent.com/7edd4ae7ae04b30fd707f9f9713e9778040b39ad/68747470733a2f2f30783132622e636f6d2f7761746368746f7765722d6c6f676f2e706e67" width="400" height="400">
 </p>
 
 So we have built a kickass docker media server but it would be a pain if we have to watch each of the containers and update them manually. This is where [Watchtower](https://github.com/v2tec/watchtower) comes in. Watchtower monitors your Docker containers. If their images in the Docker Store change, then watchtower will pull the new image, shutdown the running container and restart with the new image and the options you originally set for the container while deploying. You can specify the frequency of update check as time interval or as cron time. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
