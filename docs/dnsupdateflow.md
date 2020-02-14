@@ -6,6 +6,8 @@ Configuration
 
 ### DNS-O-Matic
 
+https://www.dnsomatic.com/
+
 Configuration
 
 ### ddclient
