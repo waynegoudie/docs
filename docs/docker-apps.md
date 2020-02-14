@@ -655,3 +655,59 @@ hydra:
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. NZBHydra WebUI should be available at http://SERVER-IP:5075.
 
+## NextCloud – Your Own Cloud Storage
+
+<p align="center">
+  <img src="https://nextcloud.com/wp-content/themes/next/assets/img/screenshots/serverwebui.png?x53054">
+</p>
+
+[Nextcloud](https://nextcloud.com) allows you to run your own cloud storage service on your home server. It is an alternative to Owncloud and created by the former founder of Owncloud. In many ways both services are similar. Nextcloud runs on your server, protects your files, and gives you secure access to your files from desktop or mobile devices from anywhere. You can also sync and share your data across devices.
+
+```yaml
+nextcloud:
+    container_name: nextcloud
+    restart: always
+    image: linuxserver/nextcloud
+    volumes:
+      - ${USERDIR}/docker/nextcloud:/config
+      - ${USERDIR}/shared_data:/data
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "XXXX:443"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - traefik_proxy
+    labels:
+      traefik.enable: "true"
+      traefik.home: "true"
+      traefik.backend: nextcloud
+      traefik.protocol: https
+      traefik.port: 443
+      traefik.frontend.rule: Host:nextcloud.${DOMAINNAME}
+      traefik.frontend.headers.SSLHost: nextcloud.${DOMAINNAME}
+      traefik.docker.network: traefik_proxy
+      traefik.frontend.passHostHeader: "true"
+      traefik.frontend.headers.SSLForceHost: "true"
+      traefik.frontend.headers.SSLRedirect: "true"
+      traefik.frontend.headers.browserXSSFilter: "true"
+      traefik.frontend.headers.contentTypeNosniff: "true"
+      traefik.frontend.headers.forceSTSHeader: "true"
+      traefik.frontend.headers.STSSeconds: 315360000
+      traefik.frontend.headers.STSIncludeSubdomains: "true"
+      traefik.frontend.headers.STSPreload: "true"
+      traefik.frontend.headers.customResponseHeaders: X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex
+#      traefik.frontend.headers.frameDeny: "true" #customFrameOptionsValue overrides this
+      traefik.frontend.headers.customFrameOptionsValue: 'allow-from https:${DOMAINNAME}'
+      traefik.frontend.auth.forward.address: "http://oauth:4181"
+      traefik.frontend.auth.forward.authResponseHeaders: X-Forwarded-User
+      traefik.frontend.auth.forward.trustForwardHeader: "true"
+```
+
+### Replace/Configure:
+
+1. ```XXXX``` – I changed the default port to 8822.
+2. ```${USERDIR}/shared_data``` – Path to data you want to share/sync. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Nextcloud WebUI should be available at http://SERVER-IP:XXXX.
