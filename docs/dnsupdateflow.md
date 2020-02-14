@@ -1,14 +1,14 @@
 ## DNS Updates
 
-###Cloudfare
+### Cloudfare
 
 Configuration
 
-###DNS-O-Matic
+### DNS-O-Matic
 
 Configuration
 
-###ddclient
+### ddclient
 
 ddclient [command lines](https://sourceforge.net/p/ddclient/wiki/usage/)
 
