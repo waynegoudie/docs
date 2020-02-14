@@ -352,8 +352,8 @@ radarr:
 ### Replace/Configure:
 
 1. ```${MEDIADIR}/Usenet``` – Path where to save downloaded files. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
-4. ```${MEDIADIR}/Media/Movies``` – Path where all of your movies are stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
-5. ```XXXX``` – port number on which you want the Radarr Webui to be available at. I choose to use the default: 7878 (must be free).
+2. ```${MEDIADIR}/Media/Movies``` – Path where all of your movies are stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+3. ```XXXX``` – port number on which you want the Radarr Webui to be available at. I choose to use the default: 7878 (must be free).
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. Radarr WebUI should be available at http://SERVER-IP:XXXX.
 
@@ -405,8 +405,8 @@ sonarr:
 ### Replace/Configure:
 
 1. ```${MEDIADIR}/Usenet``` – Path where to save downloaded files. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
-4. ```${MEDIADIR}/Media/TV``` – Path where all of your TV Shows are stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
-5. ```XXXX``` – port number on which you want the Sonarr Webui to be available at. I choose to use the default: 8989 (must be free).
+2. ```${MEDIADIR}/Media/TV``` – Path where all of your TV Shows are stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+3. ```XXXX``` – port number on which you want the Sonarr Webui to be available at. I choose to use the default: 8989 (must be free).
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. Sonarr WebUI should be available at http://SERVER-IP:XXXX.
 
@@ -592,3 +592,66 @@ plexms:
 5. ```ADVERTISE_IP``` – IP Address of your server (eg. 192.168.1.100) – you can get this from your router admin page or run ifconfig in terminal.
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. Plex WebUI should be available at http://SERVER-IP:32400.
+
+## Ombi - Accept Requests for your Media Server
+
+<p align="center">
+  <img src="https://ombi.io/img/screens/1.png">
+</p>
+
+[Ombi](https://www.ombi.io/) is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves! Ombi can be linked to multiple TV Show and Movie DVR tools to create a seamless end-to-end experience for your users.
+
+```yaml
+ombi:
+    container_name: ombi
+    restart: always
+    image: linuxserver/ombi
+    volumes:
+      - ${USERDIR}/docker/ombi:/config
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "XXXX:3579"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+```
+
+### Replace/Configure:
+
+1. ```XXXX``` – I changed the default port to 3579.
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Plex WebUI should be available at http://SERVER-IP:3579.
+
+
+## NZBHydra – NZB Meta Search
+
+<p align="center">
+  <img src="https://camo.githubusercontent.com/bb6405c85e81a4428697faddec5eddefb6e1f5ea/68747470733a2f2f692e696d6775722e636f6d2f676a63694559642e706e67">
+</p>
+
+[NZBHydra2](https://github.com/theotherp/nzbhydra) is a meta search for NZB indexers with easy access to a number of raw and newznab based indexers. It provides a unified interface to search all of your indexers from one place and also use it as indexer source for apps like Sickrage, Sonarr, and CouchPotato. 
+
+```yaml
+hydra:
+    image: "linuxserver/hydra2"
+    container_name: "hydra2"
+    volumes:
+      - ${USERDIR}/docker/hydra:/config
+      - ${MEDIADIR}/Usenet:/downloads
+      - ${USERDIR}/docker/shared:/shared
+    ports:
+      - "XXXX:5075"
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+```
+
+### Replace/Configure:
+
+1. ```XXXX``` – I changed the default port to 5075.
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. NZBHydra WebUI should be available at http://SERVER-IP:5075.
+
