@@ -21,7 +21,7 @@
   - [Webhook Relay](cdn.md)
   - [Global Environment Variables](pwa.md)
   - [Docker/Docker Compose Install Script](docker_install.sh)
-  - [Embed Files](embed-files.md)
+  - [DNS Update Configuration](dnsupdateflow.md)
 
 - [Full YAML](awesome.md)
 - [Changelog](changelog.md)
