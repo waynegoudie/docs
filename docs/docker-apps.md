@@ -715,7 +715,7 @@ Save and run the docker-compose.yml file as described previously and check if th
 ## OpenVPN
 
 <p align="center">
-  <img src="https://nextcloud.com/wp-content/themes/next/assets/img/screenshots/serverwebui.png?x53054">
+  <img src="https://openvpn.net/wp-content/uploads/2018/06/about_text_logo.png">
 </p>
 
 
