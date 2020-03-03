@@ -734,3 +734,101 @@ services:
     volumes:
      - ./openvpn-data/conf:/etc/openvpn
  ```
+
+## TVHeadend
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/tvheadend-big.png">
+</p>
+
+
+[TV Headend](https://tvheadend.org) is a TV streaming server and recorder for Linux, FreeBSD and Android supporting DVB-S, DVB-S2, DVB-C, DVB-T, ATSC, ISDB-T, IPTV, SAT>IP and HDHomeRun as input sources.
+
+```yaml
+tvhserver:
+    image: linuxserver/tvheadend
+    container_name: tvhserver
+    restart: always
+    ports:
+      - "XXXX:554"
+      - "XXXX:9981"
+      - "XXXX:9982"
+      - "XXXX:9983"
+    devices:
+      - /dev/dvb
+    volumes:
+      - ${USERDIR}/docker/tvheadend/config/:/config
+      - ${MEDIADIR}/Recorded_TV:/recordings
+    network_mode: bridge
+    environment:
+      - TZ=${TZ}
+      - PGID=${PGID}
+      - PUID=${PUID}
+ ```
+ ### Replace/Configure:
+
+1. ```XXXX``` – I use the default ports.
+2. ```${USERDIR}/docker/tvheadend/config``` – Path to configuration. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+3. ```${MEDIADIR}/Recorded_TV``` – Path to the location you want your TV recodings to reside. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Nextcloud WebUI should be available at http://SERVER-IP:XXXX (which ever port you assinged to the 9981 port).
+
+# Non Media Server Apps
+
+All of the above apps are related to running a media server. The apps below are just a list of apps that I utilise for non media server related activity. You may choose not utilise any of these.
+
+## Wordpress
+
+<p align="center">
+  <img src="https://s.w.org/images/backgrounds/wordpress-bg-medblue-square.png">
+</p>
+
+
+[Wordpress](https://wordpress.org) is open source software you can use to create a beautiful website, blog, or app. I use it for testing some of my side projects that require websites.
+
+```yaml
+ wordpress:
+    image: wordpress
+    container_name: wordpress
+    depends_on:
+     - mariadb
+    environment:
+     - WORDPRESS_DB_HOST=mariadb:3306
+     - WORDPRESS_DB_NAME=wordpress
+     - WORDPRESS_DB_USER=${MYSQL_USERNAME}
+     - WORDPRESS_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+     - "XXXX:80"
+    volumes:
+     - ${USERDIR}/docker/wordpress/html:/var/www/html
+     - ${USERDIR}/docker/wordpress/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - default
+      - traefik_proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=wordpress"
+      - "traefik.frontend.rule=Host:wordpress.${DOMAINNAME}"
+      - "traefik.port=80"
+      - "traefik.protocol=http"
+      - "traefik.docker.network=traefik_proxy"
+ #     - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.frontend.headers.STSSeconds=15768000"
+#      - "traefik.frontend.headers.browserXSSFilter=true"
+#      - "traefik.frontend.headers.contentTypeNosniff=true"
+#      - "traefik.frontend.headers.forceSTSHeader=true"
+#      - "traefik.frontend.headers.SSLHost=${DOMAINNAME}"
+#      - "traefik.frontend.headers.STSIncludeSubdomains=true"
+#      - "traefik.frontend.headers.STSPreload=true"
+#      - "traefik.frontend.headers.frameDeny=true"
+ ```
+ ### Replace/Configure:
+
+1. ```XXXX``` – I use port 8000 as I already have port 80 assigned.
+2. ```${USERDIR}/docker/wordpress/html``` – Path to your website files. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+3. ```${USERDIR}/docker/wordpress/php.ini``` – Path to your wordpress php.ini configuration file. 
+
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Nextcloud WebUI should be available at http://SERVER-IP:XXXX.
+ 
