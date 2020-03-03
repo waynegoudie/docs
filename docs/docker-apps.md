@@ -738,7 +738,7 @@ services:
 ## TVHeadend
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/tvheadend-big.png">
+  <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/tvheadend-big.png" width="400" height="400">
 </p>
 
 
@@ -781,7 +781,7 @@ All of the above apps are related to running a media server. The apps below are 
 ## Wordpress
 
 <p align="center">
-  <img src="https://s.w.org/images/backgrounds/wordpress-bg-medblue-square.png">
+  <img src="https://s.w.org/images/backgrounds/wordpress-bg-medblue-square.png" width="400" height="400">
 </p>
 
 
