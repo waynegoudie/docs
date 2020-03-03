@@ -410,6 +410,66 @@ sonarr:
 
 Save and run the docker-compose.yml file as described previously and check if the app is working. Sonarr WebUI should be available at http://SERVER-IP:XXXX.
 
+## Bazarr
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/bazarr.png">
+</p>
+
+[Bazarr](https://Bazarr.media/) is a companion application to Sonarr and Radarr that manages and downloads subtitles based on your requirements. Here is the code to add in the docker-compose file (pay attention to blank spaces at the beginning of each line):
+
+```yaml
+bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    hostname: bazarr
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+    ports:
+      - "XXXX:6767"
+    volumes:
+      - ${USERDIR}/docker/bazarr:/config
+      - ${MEDIADIR}/Media:/media
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    labels:
+      traefik.enable: "true"
+      traefik.backend: bazarr
+      traefik.protocol: http
+      traefik.port: 6767
+      traefik.frontend.rule: Host:bazarr.${DOMAINNAME}
+#     traefik.frontend.rule: Host:${DOMAINNAME}; PathPrefix: /bazarr
+      traefik.frontend.headers.SSLHost: bazarr.${DOMAINNAME}
+      traefik.docker.network: traefik_proxy
+      traefik.frontend.passHostHeader: "true"
+      traefik.frontend.headers.SSLForceHost: "true"
+      traefik.frontend.headers.SSLRedirect: "true"
+      traefik.frontend.headers.browserXSSFilter: "true"
+      traefik.frontend.headers.contentTypeNosniff: "true"
+      traefik.frontend.headers.forceSTSHeader: "true"
+      traefik.frontend.headers.STSSeconds: 315360000
+      traefik.frontend.headers.STSIncludeSubdomains: "true"
+      traefik.frontend.headers.STSPreload: "true"
+      traefik.frontend.headers.customResponseHeaders: X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex
+#      traefik.frontend.headers.frameDeny: "true" #customFrameOptionsValue overrides this
+      traefik.frontend.headers.customFrameOptionsValue: 'allow-from https:${DOMAINNAME}'
+      traefik.frontend.auth.forward.address: "http://oauth:4181"
+      traefik.frontend.auth.forward.authResponseHeaders: X-Forwarded-User
+      traefik.frontend.auth.forward.trustForwardHeader: "true"
+
+```
+
+### Replace/Configure:
+
+1. ```${USERDIR}/docker/bazarr``` – Path to the configuration files. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+2. ```${MEDIADIR}/Media``` – Path where all of your Media is stored. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
+3. ```XXXX``` – port number on which you want the Bazarr Webui to be available at. I choose to use the default: 6767 (must be free).
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. Sonarr WebUI should be available at http://SERVER-IP:XXXX.
+
 ## Emby
 
 <p align="center">
@@ -772,7 +832,7 @@ tvhserver:
 3. ```${MEDIADIR}/Recorded_TV``` – Path to the location you want your TV recodings to reside. ```${MEDIADIR}``` is filled automatically from the [environment file](https://docs.thelegendshub.com/#/Installing-Docker?id=setup-environmental-variables-for-docker) we created previously.
 
 
-Save and run the docker-compose.yml file as described previously and check if the app is working. Nextcloud WebUI should be available at http://SERVER-IP:XXXX (which ever port you assinged to the 9981 port).
+Save and run the docker-compose.yml file as described previously and check if the app is working. TV Headend WebUI should be available at http://SERVER-IP:XXXX (which ever port you assinged to the 9981 port).
 
 # Non Media Server Apps
 
@@ -830,5 +890,39 @@ All of the above apps are related to running a media server. The apps below are 
 3. ```${USERDIR}/docker/wordpress/php.ini``` – Path to your wordpress php.ini configuration file. 
 
 
-Save and run the docker-compose.yml file as described previously and check if the app is working. Nextcloud WebUI should be available at http://SERVER-IP:XXXX.
+Save and run the docker-compose.yml file as described previously and check if the app is working. Wordpress should be available at http://SERVER-IP:XXXX.
  
+## File Browser
+
+<p align="center">
+  <img src="https://blobs.gitbook.com/assets%2F-LV-MXWFGfo4YU_ahhaj%2F-LVhus3OBxJR47DesXNi%2F-LVhvC79listTJij2P_J%2F2.PNG?alt=media&token=8f47f1b3-6425-494d-966b-c1acc3550d5b" width="400" height="400">
+</p>
+
+
+[File Browser](https://filebrowser.xyz) is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface. You have many available features!.
+
+```yaml
+ filebrowser:
+    container_name: filebrowser
+    restart: always
+    image: filebrowser/filebrowser
+    volumes:
+      - /:/srv
+      - ${USERDIR}/docker/filebrowser/filebrowser.json:/filebrowser.json
+      - ${USERDIR}/docker/filebrowser/database.db:/database.db
+    ports:
+      - "XXXX:80"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+ ```
+ ### Replace/Configure:
+
+1. ```XXXX``` – I use port 7710 as I already have port 80 assigned.
+2. ```${USERDIR}/docker/filebrowser/filebrowser.json``` – Path to the json config file. ```${USERDIR}``` is filled automatically from the environment file we created previously.
+3. ```${USERDIR}/docker/filebrowser/database.db``` – Path to your file browser database file. 
+4. ```/:/srv``` - Path with which you want file browser to have access. As I wanted to browse all of the files on my media server, I added ```/``` which is root folder. I do not publish this externally for security reasons.
+
+
+Save and run the docker-compose.yml file as described previously and check if the app is working. File Browser WebUI should be available at http://SERVER-IP:XXXX.
