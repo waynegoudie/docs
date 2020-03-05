@@ -8,7 +8,7 @@
 
   - [Configuring Traefik on Docker](docker-traefik.md)
   - [Docker Home Media Server - Docker Apps](docker-apps.md)
-  - [List of Plugins](plugins.md)
+  - [Application Configuration/Setup](apps-config.md)
   - [Write a Plugin](write-a-plugin.md)
   - [Markdown configuration](markdown.md)
   - [Language highlighting](language-highlight.md)
